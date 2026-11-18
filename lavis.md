@@ -282,6 +282,10 @@ These rules come from real complaints about real sites: "I can't click anything"
 - **Nothing repaints the page continuously.** Never animate `background-position`, `filter` or `box-shadow` in a loop. Loops may only animate `transform` and `opacity`.
 - **No 3D.** No depth scenes, Three.js models, CSS 3D figures or WebGL canvases. After the build, check every button and link with `document.elementFromPoint` on desktop and mobile.
 - **Not the same colour everywhere.** Every page has at least two full-width sections that change surface, for example one band in the text colour (inverted) and one block in the accent colour. If every section sits on the same background, the design is not finished.
+- **No pill badges.** Never put a word in a small rounded bubble with a tinted background: plan names ("Pro"), "New", "Beta", status tags, counters dressed up as chips. It is the fastest way to make an interface look generated. A label is plain text: the same typeface as its surroundings, set apart by weight, size or the accent colour, with no background and no border. A real count (unread messages) may sit in a solid circle, nothing else.
+- **No accent-tinted boxes.** Do not fill a box with the accent colour at low opacity (the brown or peach panel behind a code, a card number, a notice). Boxes sit on the neutral surface with a hairline border, and the accent is kept for the one thing that can be pressed.
+- **No gradient avatars.** A placeholder avatar is a flat circle in the text colour with the initial in the background colour. No rounded squares, no gradients.
+- **No default-blue controls.** Radios, checkboxes, range sliders and focus rings never stay in the browser's blue. Set `accent-color` and the focus outline from the site's own colours.
 
 ## 5. The figures
 

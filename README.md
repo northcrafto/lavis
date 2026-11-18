@@ -36,6 +36,7 @@ The rules matter as much as the effects. Each one comes from a real complaint ab
 - No loops that repaint the page. Loops animate `transform` and `opacity` only.
 - No 3D.
 - Never the same background in every section.
+- No pill badges or tinted bubble labels, no accent-tinted boxes, no gradient avatars, no default-blue controls.
 - No AI-generated figures, and the figures stand on the ground.
 
 ## Install
