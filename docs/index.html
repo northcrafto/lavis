@@ -147,6 +147,21 @@ footer { max-width: 1080px; margin: 0 auto; padding: 40px 24px 56px; display: fl
 .liq:hover, .liq:focus-visible { color: #17140f; }
 .band .liq { --sig-btn: #f4efe6; --sig-btn-ink: #17140f; }
 .acc .liq { --sig-fill-top: #f4efe6; --sig-fill-bottom: #e6dccb; }
+/* Questions roll out */
+.fq { padding: 72px 0; }
+.fq h2 { font-size: clamp(30px, 4.5vw, 46px); line-height: 1.05; margin-bottom: 28px; }
+.faq { interpolate-size: allow-keywords; max-width: 720px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq details:first-child { border-top: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 22px 0; font-size: 19px; font-weight: 600; transition: color .25s ease; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ""; flex: none; width: 14px; height: 14px; background: linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat, linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat; transition: transform .3s cubic-bezier(.2,.75,.25,1); }
+.faq details[open] summary::after { transform: rotate(45deg); color: var(--sig-accent); }
+.faq details::details-content { block-size: 0; overflow: clip; transition: block-size .45s cubic-bezier(.2,.75,.25,1), content-visibility .45s allow-discrete; }
+.faq details[open]::details-content { block-size: auto; }
+.faq details p { margin: 0; padding: 0 40px 24px 0; max-width: 60ch; opacity: 0; transform: translateY(-8px); transition: opacity .3s ease, transform .45s cubic-bezier(.2,.75,.25,1); }
+.faq details[open] p { opacity: 1; transform: none; transition-delay: .08s; }
+@media (prefers-reduced-motion: reduce) { .faq details::details-content, .faq details p { transition: none; } }
 </style>
 </head>
 <body>
@@ -191,6 +206,16 @@ footer { max-width: 1080px; margin: 0 auto; padding: 40px 24px 56px; display: fl
     <h2>A menu that grows out of its button.</h2>
     <p>Make the window narrow and press the three bars. They morph into a cross, the menu grows as a circle from the button, and the numbered links slide in one at a time.</p>
     <div class="row"><a class="btn liq" href="https://github.com/northcrafto/lavis">Get the kit</a></div>
+  </div>
+</section>
+<section class="fq" id="faq">
+  <div class="in">
+    <h2>Questions roll out.</h2>
+    <div class="faq">
+      <details><summary>Does Lavis design my site?</summary><p>No. Every site keeps its own typeface, palette and layout. Lavis only adds the details that come back every time.</p></details>
+      <details><summary>Can I change the timing?</summary><p>No. Durations, curves and shapes are locked. Only the colours follow the site, through the five variables.</p></details>
+      <details><summary>Why does this answer slide?</summary><p>Because an answer that just appears looks unfinished. It slides down when it opens and back up when it closes.</p></details>
+    </div>
   </div>
 </section>
 <footer>

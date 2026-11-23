@@ -14,6 +14,11 @@ Every site must look **original**: its own design read, typeface, palette and he
 3. **The hamburger menu** on mobile: bars that morph into a cross (the middle bar, in the accent colour, slides out to the left), a full-screen menu that grows as a circle from the button (clip-path, 0.6 s, `cubic-bezier(.76,0,.24,1)`), and large numbered links (01, 02 …) that slide in one at a time.
 4. **The figures**: flat, cheerful, hand-drawn people (unDraw) in the site's own colours, composed into scenes of their own. Never unDraw's default purple, never AI-generated figures, never hand-rolled SVG people, and the figures stand on the ground (they do not fly or jump).
 
+Two smaller details also come back every time:
+
+- **The account link.** On a site with accounts, the header and the hamburger menu say "Sign in" to a signed-out visitor and "My account" ("Mitt konto") to a signed-in one. Both read the same state.
+- **Questions roll out.** An FAQ or any other accordion always slides open and slides shut. It never just appears.
+
 **Forbidden:** nothing that tilts or moves when the pointer is over images or cards, no slow or scroll-linked fade-ins, no loops that repaint the page (`background-position`, `filter`), no 3D (depth scenes, Three.js, CSS 3D), and never the same background in every section (at least two full-width colour changes). No pill badges or small rounded labels (a word in a tinted bubble, like a "Pro" tag), no boxes tinted with the accent colour, no gradient avatars, and no controls left in the browser's default blue.
 
 **Read `lavis.md` in this folder before the first line of code** and copy the CSS and the menu from there. Adapt only the colour variables (`--sig-*`) to the site's palette. Durations, curves and shapes do not change. If a `local.md` file exists next to this one, read it too: it holds notes for the machine the skill is installed on.
@@ -24,6 +29,8 @@ Every site must look **original**: its own design read, typeface, palette and he
 - Every `.liq` / `.liq-ghost` button is a round pill (`--liq-r` left at `999px`), not a rounded rectangle.
 - `.liq` has no background or box-shadow of its own (rest colour in `::after`, one clip-path, corners via `--liq-r`), so no light edge shows around the button.
 - Hamburger with cross morph, circle reveal and numbered links on mobile.
+- If the site has accounts: the header and the menu show "My account" when signed in, "Sign in" otherwise.
+- Every FAQ or accordion rolls out and back (checked in a real browser, opening and closing).
 - No 3D, no hover tilt on images or cards, entrances at most 0.45 s, at least two full-width colour changes.
 - No pill badges or tinted bubble labels anywhere, no accent-tinted boxes, no gradient avatars, no default-blue radios, checkboxes or focus rings.
 - Every button is clickable according to `document.elementFromPoint`, on desktop and mobile.
@@ -33,5 +40,5 @@ Every site must look **original**: its own design read, typeface, palette and he
 
 ## Files
 
-- `lavis.md`: all the code (CSS, React/Motion menu, framework-free menu), the forbidden list and the rules for the figures.
+- `lavis.md`: all the code (CSS, React/Motion menu, framework-free menu, the FAQ roll, the account link), the forbidden list and the rules for the figures.
 - `docs/index.html`: a small page showing every effect (live at https://northcrafto.github.io/lavis/).

@@ -299,6 +299,67 @@ Flat, cheerful, hand-drawn people give a site a warm, human feel that stock phot
 - **Forbidden:** AI-generated figures, hand-rolled SVG people, and figures that fly or float. They stand on the ground.
 - **Keep them through a redesign.** Never remove a site's figures when it is redone; new sections use the same style and preferably the same figures.
 
+## 6. Details that come back
+
+Two small things that every site gets right, because they are noticed the moment they are wrong.
+
+### The account link says where you are
+
+If the site has accounts, the link in the header and in the hamburger menu follows the visitor's state:
+
+- signed out: **Sign in** (in the site's language: "Logga in")
+- signed in: **My account** ("Mitt konto"), pointing at the account page
+
+Never show "Sign in" to someone who is already signed in. Ask the server once on load (a `/me` call that reads the session cookie), keep the answer in one place, and use it for both the header link and the menu link, so the two can never disagree. Until the answer arrives, show the signed-out label so the header does not jump.
+
+```tsx
+const [signedIn, setSignedIn] = useState<boolean | null>(null);
+useEffect(() => {
+  fetch("/api/auth/me").then((r) => setSignedIn(r.ok)).catch(() => setSignedIn(false));
+}, []);
+const accountLabel = signedIn ? "My account" : "Sign in";
+// <Link href="/account" className="nav-link">{accountLabel}</Link>  in the header AND in the menu's LINKS
+```
+
+### Questions roll out
+
+An FAQ, or anything else that opens and closes (accordion, "read more", filters), **always rolls out and rolls back**. An answer that pops in with no motion is not finished. Build it on `<details>` so it works without script, and animate the height:
+
+```css
+.faq { interpolate-size: allow-keywords; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 24px 0; transition: color .25s ease; }
+.faq summary::-webkit-details-marker { display: none; }
+/* plus that turns into a cross in the accent colour */
+.faq summary::after {
+  content: ""; flex: none; width: 14px; height: 14px;
+  background: linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat,
+              linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat;
+  transition: transform .3s cubic-bezier(.2,.75,.25,1);
+}
+.faq details[open] summary::after { transform: rotate(45deg); color: var(--sig-accent); }
+/* the answer slides down when the question opens and up when it closes */
+.faq details::details-content {
+  block-size: 0; overflow: clip;
+  transition: block-size .45s cubic-bezier(.2,.75,.25,1), content-visibility .45s allow-discrete;
+}
+.faq details[open]::details-content { block-size: auto; }
+.faq details p { opacity: 0; transform: translateY(-8px); transition: opacity .3s ease, transform .45s cubic-bezier(.2,.75,.25,1); }
+.faq details[open] p { opacity: 1; transform: none; transition-delay: .08s; }
+@media (prefers-reduced-motion: reduce) {
+  .faq details::details-content, .faq details p { transition: none; }
+}
+```
+
+```html
+<div class="faq">
+  <details><summary>Does it cost anything?</summary><p>No.</p></details>
+  <details><summary>Do you collect data about me?</summary><p>No.</p></details>
+</div>
+```
+
+`interpolate-size` and `::details-content` do the work in current Chromium and Safari. Where they are missing the answer still opens, only without the slide, so check the roll in a real browser before delivery. If the accordion is built from buttons and divs instead of `<details>`, animate `grid-template-rows: 0fr` to `1fr` with the same 0.45 s curve. Either way the closing is animated too.
+
 ## Exceptions to general design-skill rules
 
 Lavis is meant to sit on top of whatever design guidance you use. Where they disagree, these win:
@@ -306,3 +367,4 @@ Lavis is meant to sit on top of whatever design guidance you use. Where they dis
 - **The numbers 01, 02, 03 in the hamburger menu are allowed**, even if numbered labels are otherwise banned.
 - **The liquid fill and the underlines count as motivated motion.** Both are feedback on hover and focus.
 - **The menu is not replaced** by other menu patterns (gooey menus, mega menus and the like).
+- **The FAQ roll is allowed** although it takes 0.45 s and moves more than 12 px: it is the answer to a click, not an entrance.

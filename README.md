@@ -2,11 +2,13 @@
 
 # Lavis
 
-**A signature kit for websites.** Four locked motions that go on top of an original design and make it recognisable.
+**A signature kit for websites.** A handful of locked motions that go on top of an original design and make it recognisable.
 
 [Live demo](https://northcrafto.github.io/lavis/) · [The kit](lavis.md) · [MIT](LICENSE)
 
-<img src="assets/fill.png" alt="The Lavis demo page with a primary button filling with colour from below" width="860">
+<img src="assets/hero.png" alt="The AdRaze website, built with Lavis: black round buttons, a drawn underline nav and an orange accent" width="860">
+
+<sub>Lavis on a real site: <a href="https://adraze.app">adraze.app</a></sub>
 
 </div>
 
@@ -22,9 +24,36 @@ Lavis is a skill for [Claude Code](https://claude.com/claude-code) and other cod
 | **Drawn lines** | Underlines draw in from the left under nav and footer links. `.nav-link`. |
 | **The menu** | The hamburger morphs into a cross, a full-screen menu grows as a circle out of the button, and numbered links slide in one at a time. React (Motion) and framework-free versions. |
 | **The figures** | Flat hand-drawn people from [unDraw](https://undraw.co), recoloured to the site palette and composed into scenes of their own. |
+| **The account link** | On a site with accounts the header and the menu say "Sign in" when signed out and "My account" when signed in. |
+| **Questions roll out** | An FAQ or accordion always slides open and shut. It never just appears. |
+
+## The details, on a real site
+
+All of these are recorded on [adraze.app](https://adraze.app).
+
+<table>
+<tr>
+<td width="34%" align="center"><img src="assets/menu.gif" alt="The hamburger turns into a cross, the menu grows as a circle from the button and the numbered links slide in" width="260"></td>
+<td>
+
+**The menu.** Three bars turn into a cross, the middle one leaves to the left in the accent colour. The menu grows as a circle out of the button, and the numbered links arrive one at a time.
+
+<img src="assets/fill.gif" alt="A black button and an outline button filling with colour from below" width="460">
+
+**Liquid fill.** The colour rises from below with a wave on top, in about a second. The buttons are always round.
+
+</td>
+</tr>
+</table>
 
 <div align="center">
-<img src="assets/menu.png" alt="The mobile menu open, with numbered links" width="260">
+<img src="assets/faq.gif" alt="Questions in an FAQ sliding open and shut" width="560">
+
+**Questions roll out.** An answer slides down when it opens and back up when it closes.
+
+<img src="assets/figures.png" alt="Four hand-drawn figures holding up a flag between two poles, in the site's orange" width="760">
+
+**The figures.** unDraw people in the site's own colours, in a scene only that site has. They stand on the ground.
 </div>
 
 ## What it forbids
