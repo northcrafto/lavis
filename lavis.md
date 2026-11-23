@@ -29,7 +29,8 @@ Set the variables to the site's own colours. Copy the rest verbatim.
    ::after (bottom layer), the liquid in ::before, and the whole button is clipped with ONE clip-path. With the rest
    colour on the button itself it leaked out as a thin light line around the rounded edge under GPU rendering
    (Chromium; it does not show in headless screenshots). Set the corner radius with --liq-r, never border-radius
-   directly. Never put background or box-shadow on .liq. */
+   directly. Never put background or box-shadow on .liq.
+   The buttons are always round: leave --liq-r at 999px. */
 .liq {
   --liq-r: 999px;
   position: relative; isolation: isolate; overflow: hidden; border: 0;
@@ -102,6 +103,7 @@ Set the variables to the site's own colours. Copy the rest verbatim.
 - `.liq` on every primary call to action (Buy, Book, Send, Download, Play). `.liq-ghost` on secondary buttons. Never both variants for the same intent.
 - `.nav-link` on every text link in the header and the footer.
 - On dark sites: a light or accent-coloured button that fills dark, or a dark `--sig-btn` with a light liquid. Check contrast in both states.
+- **The buttons are round.** `.liq` and `.liq-ghost` are always fully rounded pills (`--liq-r: 999px`), on every site, whatever radius the rest of the design uses for cards and fields. Do not lower `--liq-r` to match the boxes. The round button is part of the signature, like the wave on top of the liquid.
 
 ---
 
