@@ -21,7 +21,7 @@ Lavis is a skill for [Claude Code](https://claude.com/claude-code) and other cod
 | | |
 |---|---|
 | **Liquid fill** | Buttons fill from below with a wavy top in about 0.95 s. `.liq` for primary actions, `.liq-ghost` for secondary. |
-| **Drawn lines** | Underlines draw in from the left under nav and footer links. `.nav-link`. |
+| **Drawn lines** | Underlines draw in from the left under nav and footer links, and the word fills with the accent colour in the same motion. `.nav-link`. |
 | **The menu** | The hamburger morphs into a cross, a full-screen menu grows as a circle out of the button, and numbered links slide in one at a time. React (Motion) and framework-free versions. |
 | **The figures** | Flat hand-drawn people from [unDraw](https://undraw.co), recoloured to the site palette and composed into scenes of their own. |
 | **The account link** | On a site with accounts the header and the menu say "Sign in" when signed out and "My account" when signed in. |
@@ -41,6 +41,10 @@ All of these are recorded on [adraze.app](https://adraze.app).
 <img src="assets/fill.gif" alt="A black button and an outline button filling with colour from below" width="460">
 
 **Liquid fill.** The colour rises from below with a wave on top, in about a second. The buttons are always round.
+
+<img src="assets/links.gif" alt="Hovering the nav links: each word fills with orange from the left while a line draws in under it" width="460">
+
+**Links.** The word fills with the accent colour from the left while the line draws in under it. One motion, 0.45 s.
 
 </td>
 </tr>

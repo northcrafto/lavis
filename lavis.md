@@ -3,7 +3,7 @@
 Every site gets its **own, original design**: its own typeface, palette, layout and hero. Four things come back **every time**, because they are the signature:
 
 1. **Liquid fill** on buttons (`.liq`): colour rises from below with a wavy top, in about one second.
-2. **Drawn lines**: underlines that draw in from the left under links (`.nav-link`).
+2. **Drawn lines**: underlines that draw in from the left under links, while the word itself fills with the accent colour from the left (`.nav-link`).
 3. **The hamburger menu**: three bars morph into a cross, a full-screen menu grows as a circle out of the button, and numbered links slide in one at a time.
 4. **The figures**: flat, cheerful hand-drawn people from unDraw, recoloured to the site palette and composed into scenes of their own (section 5).
 
@@ -92,16 +92,27 @@ Set the variables to the site's own colours. Copy the rest verbatim.
 }
 .nav-link:hover::after, .nav-link:focus-visible::after, .nav-link[aria-current="page"]::after { transform: scaleX(1); }
 
+/* The word itself fills with the accent colour from the left, in step with the line */
+.nav-link {
+  background-image: linear-gradient(var(--sig-accent), var(--sig-accent)), linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat; background-size: 0% 100%, 100% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  transition: background-size .45s cubic-bezier(.4,0,.2,1);
+}
+.nav-link:hover, .nav-link:focus-visible { background-size: 100% 100%, 100% 100%; }
+@media (forced-colors: active) { .nav-link { background: none; -webkit-text-fill-color: currentColor; } }
+
 @media (prefers-reduced-motion: reduce) {
   .liq::before, .liq-ghost::before { border-radius: 0; bottom: 0; height: 100%; transition: transform .2s ease; }
   .liq:hover::after, .liq:focus-visible::after, .liq-ghost:hover::after, .liq-ghost:focus-visible::after { transition: opacity 0s .2s; }
-  .nav-link::after { transition: none; }
+  .nav-link, .nav-link::after { transition: none; }
 }
 ```
 
 **Where the effects go:**
 - `.liq` on every primary call to action (Buy, Book, Send, Download, Play). `.liq-ghost` on secondary buttons. Never both variants for the same intent.
 - `.nav-link` on every text link in the header and the footer.
+- **The colour sweep belongs to the line.** On hover and keyboard focus the link text fills with `--sig-accent` from left to right in 0.45 s while the line draws in under it. It is one motion, so never ship the line without the sweep or the sweep without the line. The text is painted with two stacked backgrounds clipped to the letters, so do not set `color: transparent` or a `background` of your own on a `.nav-link`, and check that the accent is readable on the surface the link stands on (pick a lighter accent for links on dark surfaces by setting `--sig-accent` on that section).
 - On dark sites: a light or accent-coloured button that fills dark, or a dark `--sig-btn` with a light liquid. Check contrast in both states.
 - **The buttons are round.** `.liq` and `.liq-ghost` are always fully rounded pills (`--liq-r: 999px`), on every site, whatever radius the rest of the design uses for cards and fields. Do not lower `--liq-r` to match the boxes. The round button is part of the signature, like the wave on top of the liquid.
 

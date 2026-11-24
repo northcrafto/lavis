@@ -112,10 +112,20 @@ footer { max-width: 1080px; margin: 0 auto; padding: 40px 24px 56px; display: fl
 }
 .nav-link:hover::after, .nav-link:focus-visible::after, .nav-link[aria-current="page"]::after { transform: scaleX(1); }
 
+/* The word itself fills with the accent colour from the left, in step with the line */
+.nav-link {
+  background-image: linear-gradient(var(--sig-accent), var(--sig-accent)), linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat; background-size: 0% 100%, 100% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  transition: background-size .45s cubic-bezier(.4,0,.2,1);
+}
+.nav-link:hover, .nav-link:focus-visible { background-size: 100% 100%, 100% 100%; }
+@media (forced-colors: active) { .nav-link { background: none; -webkit-text-fill-color: currentColor; } }
+
 @media (prefers-reduced-motion: reduce) {
   .liq::before, .liq-ghost::before { border-radius: 0; bottom: 0; height: 100%; transition: transform .2s ease; }
   .liq:hover::after, .liq:focus-visible::after, .liq-ghost:hover::after, .liq-ghost:focus-visible::after { transition: opacity 0s .2s; }
-  .nav-link::after { transition: none; }
+  .nav-link, .nav-link::after { transition: none; }
 }
 
 .hb { position: relative; display: block; width: 24px; height: 16px; }

@@ -10,7 +10,7 @@ A lavis is a wash of diluted ink: one stroke, and the colour floods the paper. T
 Every site must look **original**: its own design read, typeface, palette and hero, following whatever design skill is in use (or your own judgement). No site may be a copy of an earlier one. On top of that design, ALWAYS build in these four, with exactly the same motion every time:
 
 1. **Liquid fill** (`.liq`, `.liq-ghost`) on every call-to-action button: the colour rises from below with a wavy top in about 0.95 s. The buttons are always round (fully rounded pills), whatever radius the rest of the site uses.
-2. **Lines**: underlines that draw in from the left under nav and footer links (`.nav-link`).
+2. **Lines**: underlines that draw in from the left under nav and footer links, while the word itself fills with the accent colour from the left in the same motion (`.nav-link`).
 3. **The hamburger menu** on mobile: bars that morph into a cross (the middle bar, in the accent colour, slides out to the left), a full-screen menu that grows as a circle from the button (clip-path, 0.6 s, `cubic-bezier(.76,0,.24,1)`), and large numbered links (01, 02 …) that slide in one at a time.
 4. **The figures**: flat, cheerful, hand-drawn people (unDraw) in the site's own colours, composed into scenes of their own. Never unDraw's default purple, never AI-generated figures, never hand-rolled SVG people, and the figures stand on the ground (they do not fly or jump).
 
@@ -26,6 +26,7 @@ Two smaller details also come back every time:
 ## Check before delivery
 
 - `.liq` / `.liq-ghost` on every call to action, `.nav-link` on nav and footer links.
+- Hovering a nav link draws the line AND sweeps the accent colour through the word. Both, never one of them.
 - Every `.liq` / `.liq-ghost` button is a round pill (`--liq-r` left at `999px`), not a rounded rectangle.
 - `.liq` has no background or box-shadow of its own (rest colour in `::after`, one clip-path, corners via `--liq-r`), so no light edge shows around the button.
 - Hamburger with cross morph, circle reveal and numbered links on mobile.
