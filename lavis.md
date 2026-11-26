@@ -312,7 +312,7 @@ Flat, cheerful, hand-drawn people give a site a warm, human feel that stock phot
 
 ## 6. Details that come back
 
-Two small things that every site gets right, because they are noticed the moment they are wrong.
+Small things that every site gets right, because they are noticed the moment they are wrong.
 
 ### The account link says where you are
 
@@ -370,6 +370,70 @@ An FAQ, or anything else that opens and closes (accordion, "read more", filters)
 ```
 
 `interpolate-size` and `::details-content` do the work in current Chromium and Safari. Where they are missing the answer still opens, only without the slide, so check the roll in a real browser before delivery. If the accordion is built from buttons and divs instead of `<details>`, animate `grid-template-rows: 0fr` to `1fr` with the same 0.45 s curve. Either way the closing is animated too.
+
+### The name pulls out of the mark
+
+The logo in the header is the mark plus the name, and the name is built so it can fold away. Each letter is its own element. When folded, only the mark shows; on hover and keyboard focus the letters pull out one after another from behind the mark, and while they do, each letter fills with the accent colour from the bottom up, like the liquid in the buttons. The mark gives a short squash as the name comes out. Moving the pointer away folds the letters back in reverse order.
+
+When the name folds is the site's choice: always (a mark-only header, the name only on hover), or only once the page is scrolled past the hero. A device that cannot hover shows the name once on the first visit of the session, then folds it, so phones see it too.
+
+```css
+.logo-name { display: inline-flex; align-items: baseline; }
+.lb { position: relative; display: inline-block; max-width: 1.2em; overflow: clip; overflow-clip-margin: 3px;
+  transition: max-width .55s cubic-bezier(.2,.75,.25,1), opacity .4s ease; transition-delay: calc(var(--i) * 35ms); }
+/* the accent copy of each letter, revealed from the bottom */
+.lb::after { content: attr(data-b); position: absolute; left: 0; top: 0; color: var(--sig-accent);
+  clip-path: inset(105% -2px -4px -2px); transition: clip-path .75s cubic-bezier(.2,.75,.25,1); transition-delay: calc(var(--i) * 55ms); }
+.logo:hover .lb::after, .logo:focus-visible .lb::after, .logo.hello .lb::after { clip-path: inset(-4px -2px -4px -2px); }
+/* folded: add .folded to the header (always, or when scrolled past the hero) */
+.folded .logo:not(:hover):not(:focus-visible):not(.hello) .lb { max-width: 0; opacity: 0; transition-delay: calc((5 - var(--i)) * 30ms); }
+.logo img { transform-origin: 50% 85%; }
+.logo:hover img, .logo:focus-visible img, .logo.hello img { animation: squash .52s ease-in-out 2; }
+@keyframes squash { 0%, 100% { transform: none; } 30% { transform: scale(1.07, .88); } 60% { transform: scale(.97, 1.04); } }
+@media (prefers-reduced-motion: reduce) { .lb, .lb::after { transition: none; } .logo img { animation: none !important; } }
+```
+
+```js
+// split the name into letters once; the visible name stays in aria-label on the link
+const logo = document.querySelector(".logo"), name = logo.dataset.name; // e.g. data-name="acme"
+const word = document.createElement("span"); word.className = "logo-name"; word.setAttribute("aria-hidden", "true");
+[...name].forEach((ch, i) => { const b = document.createElement("span"); b.className = "lb"; b.dataset.b = ch; b.textContent = ch; b.style.setProperty("--i", i); word.append(b); });
+logo.append(word);
+// first visit of the session: show the whole name once, then fold it
+let seen = false; try { seen = sessionStorage.getItem("logo-hello") === "1"; sessionStorage.setItem("logo-hello", "1"); } catch {}
+if (!seen && !matchMedia("(prefers-reduced-motion: reduce)").matches)
+  setTimeout(() => { logo.classList.add("hello"); setTimeout(() => logo.classList.remove("hello"), 1700); }, 900);
+```
+
+If the name is a drawn wordmark (SVG) rather than text, give each letter its own small SVG inside the `.lb` span and put a second copy in the accent colour on top (a `<use>` of the first, with `fill: currentColor` on the paths), clipped the same way. Max-width then becomes the letter's own width.
+
+### A pen line under the headline
+
+The last word of a section headline gets a hand-drawn line under it in the accent colour. It draws itself from left to right the first time the headline comes into view, and once more when the pointer is over the headline. One line per section, never under body text or buttons.
+
+```css
+.pen { position: relative; display: inline-block; white-space: nowrap; isolation: isolate; }
+.pen svg { position: absolute; left: -2%; bottom: -.14em; width: 104%; height: .2em; z-index: -1; overflow: visible; pointer-events: none; }
+.pen path { fill: none; stroke: var(--sig-accent); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1;
+  transition: stroke-dashoffset .9s cubic-bezier(.6,.05,.25,1) .15s; }
+.seen .pen path { stroke-dashoffset: 0; }
+h2.seen:hover .pen path { animation: draw .8s cubic-bezier(.6,.05,.25,1); }
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .pen path { transition: none; stroke-dashoffset: 0; } h2.seen:hover .pen path { animation: none; } }
+```
+
+```js
+document.querySelectorAll(".pen").forEach((el) => el.insertAdjacentHTML("beforeend",
+  '<svg viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 8 C 22 3, 48 2, 70 5 S 92 9, 98 4"/></svg>'));
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("seen"); io.unobserve(e.target); } }), { threshold: .6 });
+document.querySelectorAll(".pen").forEach((el) => io.observe(el.closest("h2")));
+```
+
+```html
+<h2>Built for <span class="pen">people.</span></h2>
+```
+
+The line drawing on view is the one entrance allowed to run when content scrolls in, because the text itself is already there: nothing waits to appear.
 
 ## Exceptions to general design-skill rules
 

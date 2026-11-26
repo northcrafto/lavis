@@ -26,6 +26,7 @@ Two smaller details also come back every time:
 ## Check before delivery
 
 - `.liq` / `.liq-ghost` on every call to action, `.nav-link` on nav and footer links.
+- The header logo folds to the mark and pulls the name out letter by letter on hover, filling with the accent (lavis.md section 6). Section headlines get the drawn pen line under their last word.
 - Hovering a nav link draws the line AND sweeps the accent colour through the word. Both, never one of them.
 - Every `.liq` / `.liq-ghost` button is a round pill (`--liq-r` left at `999px`), not a rounded rectangle.
 - `.liq` has no background or box-shadow of its own (rest colour in `::after`, one clip-path, corners via `--liq-r`), so no light edge shows around the button.
